@@ -1,18 +1,9 @@
-# KC85_SDCC_Hello_World
-"Hello World"-Beispiel für KC85/4 mit dem Small Device C Compiler (SDCC)
+# Hello_World
 
+Besonderheit:
+- Verwendung von 'printf'  
 
-Das Projekt zeigt den Einsatz des SDCC-Compilers um KCC-Dateien für die Kleincomputer aus Mühlhausen (KC85/3, KC85/4, KC85/5) zu erzeugen.
-Dazu sind einige Anpassungen nötig (crt0.s, header.s, menuentry.s).
-Außerdem gibt es eine Bibliothek, die ein angepasste printf-Funktion zur Verfügung stellt und eine Bibliothek, die Zugriff auf einige Unterprogramme des Betriebsystems CAOS erlaubt.
-
-## Buildsystem
-Um das Programm zu übersetzen werden folgende Werkzeuge benötigt:  
-- make  
-- sdcc  
-- python3  
-
-### Compilerausgabe
+## Compilerausgabe
 
 <pre>
 make --directory lib_caos
@@ -76,7 +67,7 @@ rm hello.asm
 </pre>
 
 ## Ergebnis
-![Programmlauf im Emulator](Bilder/hello.png)
+![Programmlauf im Emulator](../Bilder/hello.png)
 
 
 ## Dateien
@@ -100,19 +91,4 @@ rm hello.asm
 | ---               | ---
 | lib_caos          | Bibliothek zur Nutzung der CAOS-Unterprogamme
 | lib_printf        | printf-Funktion für CAOS
-
-
-# Hilfreiche Links
-
-- KC85/5 Systemhandbuch  
-http://www.kc85.info/index.php/download-topmenu/download/32-handbuecher/401-kc85-5-systemhandbuch.html
-
-- SDCC - Small Device C Compiler  
-https://sdcc.sourceforge.net/
-
-- Gihub-Seite von Andreas Ziermann  
-https://github.com/anchorz/sdcc-z1013-kc85
-
-- JKCEMU, Emulator (u.a. KC85) von Jens Müller  
-http://www.jens-mueller.org/jkcemu/
 
