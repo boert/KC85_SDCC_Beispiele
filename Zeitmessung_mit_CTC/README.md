@@ -17,5 +17,5 @@ Kanal | Signal  | Frequenz | Nutzung         | Ausgang
 
 Der CTC Kanal 2 läßt sich ohne größere Nebenwirkungen in eigenen Programmen für die Messung von Zeiten nutzen.
 
-Eine mögliche Anwendung zeigt dieses Beispielprogramm:
+Eine mögliche Anwendung zeigt dieses Beispielprogramm:  
 ![Programmlauf im Emulator](../Bilder/zeitmess.png)
