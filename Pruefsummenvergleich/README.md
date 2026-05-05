@@ -1,4 +1,4 @@
-# Vergleich verschiedener Prüfsummenalgorithen
+# Vergleich verschiedener Prüfsummenalgorithmen
 
 Im diesem Projekt sind verschiedene Prüfsummenalgorithmen implementiert.
 Das Programm ermittelt zusätzlich die jeweiligen Laufzeiten, der Algorithmen, jewils für einen Speicherbereich von 8 kByte.
