@@ -158,7 +158,7 @@ void process_block
     std::print( "    fletcher 256 {:04X}", calc_fsum_256( data));
     std::print( "    fletcher KC {:04X}", calc_fsum_kc( data));
     std::print( "    sum16 {:04X}", calc_sum16( data));
-    std::print( "    fletcher 16  {:08X}", calc_fletcher16( data));
+    //std::print( "    fletcher 16  {:08X}", calc_fletcher16( data));
     std::println();
 }
 
