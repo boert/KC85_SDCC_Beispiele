@@ -35,12 +35,14 @@ uint16_t calc_fsum_255( uint8_t* data, uint16_t length);
 uint16_t calc_fsum_256( uint8_t* data, uint16_t length);
 uint16_t calc_fsum_kc( uint8_t* addr, uint16_t length);
 uint16_t calc_sum16( uint8_t* address, uint16_t length);
+uint8_t  calc_xor( uint8_t* address, uint16_t length);
 
 extern uint16_t calc_crc16_asm( uint8_t* data, uint16_t len);
 extern uint16_t calc_fletcher_255_asm( uint8_t* data, uint16_t len);
 extern uint16_t calc_fletcher_256_asm( uint8_t* data, uint16_t len);
 extern uint16_t calc_fletcher_kc_asm( uint8_t* data, uint16_t len);
 extern uint16_t calc_sum16_asm( uint8_t* data, uint16_t len);
+extern uint8_t  calc_xor_asm( uint8_t* data, uint16_t len);
 
 
 //////////////////////////////
@@ -81,6 +83,7 @@ void main( void)
 
     uint16_t runtime;
     uint16_t csum;
+    uint8_t  bsum;
 
 
     printf( CLL "C-Routinen\n");
@@ -114,6 +117,12 @@ void main( void)
     runtime = time;
     printf( "%04X (%4d ms)\n", csum, runtime * TIME_FACTOR);
 
+    printf( CLL "xor           ");
+    time = 0;
+    bsum = calc_xor( (uint8_t*) 0x4000, 8192);
+    runtime = time;
+    printf( "  %02X (%4d ms)\n", bsum, runtime * TIME_FACTOR);
+
 
     printf( CLL "ASM-Routinen\n");
     printf( CLL "crc16         ");
@@ -146,6 +155,12 @@ void main( void)
     runtime = time;
     printf( "%04X (%4d ms)\n", csum, runtime * TIME_FACTOR);
 
+    printf( CLL "xor           ");
+    time = 0;
+    bsum = calc_xor_asm( (uint8_t*) 0x4000, 8192);
+    runtime = time;
+    printf( "  %02X (%4d ms)\n", bsum, runtime * TIME_FACTOR);
+
 
     // Zeitmessung nachbereiten
     ctc_restore();
@@ -170,6 +185,18 @@ void timer_isr( void) __critical __interrupt( 0) __naked
         ei
         reti
     __endasm;
+}
+
+
+uint8_t calc_xor( uint8_t* address, uint16_t length)
+{
+    uint8_t value = 0;
+    for( uint16_t index = 0; index < length; index++)
+    {
+        value ^= *address;
+        address++;
+    }
+    return value;
 }
 
 

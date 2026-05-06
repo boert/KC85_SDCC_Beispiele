@@ -12,6 +12,7 @@ Die Algorithmen sind sowohl in C als auch in Assembler (ASM) umgesetzt. Damit we
 - Fletcher-16 mit M = 256  
 - Fletcher-16 mit M = 256 (modifizierter Startwert)  
 - SUM16  
+- XOR  
 
 ### CRC16
 CRC steht für _cyclic redundancy check_, einem Prüfsummenverfahren, welches sich gut in Hardware (Logikschaltkreise) abbilden lässt.
@@ -58,6 +59,15 @@ Um den Nachteil zu Umgehen und doch eine Unterscheidung machen zu können, kann 
 Damit ist eine Nutzung als Signaturalgorithmus möglich.
 
 
+### SUM16
+Eine einfache Addition aller Werte im Speicher.
+Das Ergebnis wird auf 16 Bit beschnitten (Modulo 65536).
+
+### XOR
+Alle Werte im Speicher werden miteinander Exklusiv-Oder (XOR) verknüpft.
+
+
+
 ## Laufzeiten
 
 Die Lauzeitmessung erfolgt mit Hilfe der CTC, Kanal 2. Es wir alle 20 ms ein Interupt ausgelöst und eine Zählvariable inkrementiert.
@@ -66,11 +76,12 @@ Mit einer 16-Bit Zählvariable läßt sich ein Messbereich bis 5:27 min:s abdeck
 
 | Algorithmus  | Laufzeit C | Laufzeit ASM | ca. Faktor |
 | :---         |  --------: |  ----------: |  -----:    |
-| CRC16        | 7940 ms    | 840 ms       | 10         |
-| Fletcher 255 | 7760 ms    | 280 ms       | 28         |
-| Fletcher 256 | 1020 ms    | 200 ms       | 5          |
-| Fletcher KC  | 1020 ms    | 200 ms       | 5          |
-| SUM16        |  960 ms    | 180 ms       | 5          |
+| CRC16        | 7940 ms    | 840 ms       |  9,5       |
+| Fletcher 255 | 7760 ms    | 280 ms       | 27,7       |
+| Fletcher 256 | 1020 ms    | 200 ms       |  5,1       |
+| Fletcher KC  | 1020 ms    | 200 ms       |  5,1       |
+| SUM16        |  960 ms    | 180 ms       |  4,8       |
+| XOR          |  720 ms    | 180 ms       |  4,0       |
 
 
 [^1]: https://de.wikipedia.org/wiki/Zyklische_Redundanzpr%C2%BCfung#Berechnung_einer_CRC-Pr%C3%BCfsumme_in_C_und_Pascal_bzw._Delphi

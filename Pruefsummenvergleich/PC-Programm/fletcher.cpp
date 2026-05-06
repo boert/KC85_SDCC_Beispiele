@@ -145,6 +145,19 @@ uint32_t calc_fletcher16( const std::vector<uint8_t>& data)
 }
 
 
+// XOR checksum
+uint8_t calc_xor( const std::vector<uint8_t>& data)
+{
+    uint8_t  s = 0;
+
+    for( uint16_t index = 0; index < data.size(); index++)
+    {
+        s ^= data[ index];
+    }
+    return s;
+}
+
+
 void process_block
 (
     const std::vector<uint8_t>& data,
@@ -157,6 +170,7 @@ void process_block
     std::print( "    fletcher 255 {:04X}", calc_fsum_255( data));
     std::print( "    fletcher 256 {:04X}", calc_fsum_256( data));
     std::print( "    fletcher KC {:04X}", calc_fsum_kc( data));
+    std::print( "    XOR8  {:02X}", calc_xor( data));
     std::print( "    sum16 {:04X}", calc_sum16( data));
     //std::print( "    fletcher 16  {:08X}", calc_fletcher16( data));
     std::println();
