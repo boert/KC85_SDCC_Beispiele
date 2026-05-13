@@ -81,6 +81,20 @@ uint16_t calc_crc16( const std::vector<uint8_t>& data)
 }
 
 
+uint32_t calc_adler32( const std::vector<uint8_t>& data)
+{
+    uint32_t  a = 1;
+    uint32_t  b = 0;
+
+    for( uint16_t index = 0; index < data.size(); index++)
+    {
+        a = ( a + data[ index]) % 65521;
+        b = ( a + b           ) % 65521;
+    }
+    return(( (uint32_t) b << 16) | a);
+}
+
+
 // Prüfsumme berechnen,
 // Fletcher Modulo 256, Startwert modifiziert
 // https://www.mikrocontroller.net/topic/455478#5492259
@@ -166,6 +180,7 @@ void process_block
 {
     std::print( "{}", comment);
     std::print( "    Länge {}", data.size());
+    std::print( "    Adler-32 {:08X}", calc_adler32( data));
     std::print( "    crc16 {:04X}", calc_crc16( data));
     std::print( "    fletcher 255 {:04X}", calc_fsum_255( data));
     std::print( "    fletcher 256 {:04X}", calc_fsum_256( data));
