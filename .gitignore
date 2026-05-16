@@ -1,3 +1,9 @@
+# sdcc stuff
+*.sym
+*.rel
+*.lst
+*.noi
+
 # Prerequisites
 *.d
 
