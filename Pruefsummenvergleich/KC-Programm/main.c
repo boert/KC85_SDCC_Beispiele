@@ -31,6 +31,7 @@ isrptr ctc2_vector_save;
 void timer_isr( void) __critical __interrupt( 0) __naked;
 
 uint16_t calc_crc16( uint8_t* address, uint16_t length);
+uint16_t calc_adler16( uint8_t* address, uint16_t length);
 uint16_t calc_fsum_255( uint8_t* data, uint16_t length);
 uint16_t calc_fsum_256( uint8_t* data, uint16_t length);
 uint16_t calc_fsum_kc( uint8_t* addr, uint16_t length);
@@ -38,6 +39,7 @@ uint16_t calc_sum16( uint8_t* address, uint16_t length);
 uint8_t  calc_xor( uint8_t* address, uint16_t length);
 
 extern uint16_t calc_crc16_asm( uint8_t* data, uint16_t len);
+extern uint16_t calc_adler16_asm( uint8_t* data, uint16_t len);
 extern uint16_t calc_fletcher_255_asm( uint8_t* data, uint16_t len);
 extern uint16_t calc_fletcher_256_asm( uint8_t* data, uint16_t len);
 extern uint16_t calc_fletcher_kc_asm( uint8_t* data, uint16_t len);
@@ -93,6 +95,12 @@ void main( void)
     runtime = time;
     printf( "%04X (%4d ms)\n", csum, runtime * TIME_FACTOR);
 
+    printf( CLL "Adler-16      ");
+    time = 0;
+    csum = calc_adler16( (uint8_t*) 0x4000, 8192);
+    runtime = time;
+    printf( "%04X (%4d ms)\n", csum, runtime * TIME_FACTOR);
+
     printf( CLL "fletcher 255  ");
     time = 0;
     csum = calc_fsum_255( (uint8_t*) 0x4000, 8192);
@@ -128,6 +136,12 @@ void main( void)
     printf( CLL "crc16         ");
     time = 0;
     csum = calc_crc16_asm( (uint8_t*) 0x4000, 8192);
+    runtime = time;
+    printf( "%04X (%4d ms)\n", csum, runtime * TIME_FACTOR);
+
+    printf( CLL "Adler-16      ");
+    time = 0;
+    csum = calc_adler16_asm( (uint8_t*) 0x4000, 8192);
     runtime = time;
     printf( "%04X (%4d ms)\n", csum, runtime * TIME_FACTOR);
 
@@ -297,4 +311,29 @@ uint16_t calc_crc16( uint8_t* data, uint16_t length)
         crc = xmodem_crc16( data[ index], crc);
     }
     return crc;
+}
+
+uint16_t calc_adler16( uint8_t* data, uint16_t length)
+{
+    uint16_t index;
+    uint16_t a;
+    uint16_t b;
+
+    a = 1;
+    b = 0;
+
+    for( index = 0; index < length; index++)
+    {
+        a = a + data[ index];
+        while( a >= 251)
+        {
+            a -= 251;
+        }
+        b = b + a;
+        while( b >= 251)
+        {
+            b -= 251;
+        }
+    }
+    return ((uint16_t) b << 8) | a;
 }

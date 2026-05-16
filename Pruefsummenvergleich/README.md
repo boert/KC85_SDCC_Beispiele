@@ -8,6 +8,7 @@ Die Algorithmen sind sowohl in C als auch in Assembler (ASM) umgesetzt. Damit we
 
 ## Prüfsummenalgorithmen
 - CRC16 (nach CCITT)  
+- Adler-16  
 - Fletcher-16 mit M = 255  
 - Fletcher-16 mit M = 256  
 - Fletcher-16 mit M = 256 (modifizierter Startwert)  
@@ -22,6 +23,13 @@ Eine Kontrolle kann mit jacksum [^1] erfolgen:
 ```
 jacksum -a crc:16,1021,ffff,false,false,0 -X  <Datei>
 ```
+
+### Adler-16
+Der Adler-16 Algorithmus ist eine Ableitung aus dem Adler-32 Algorithmus [^4]. Dieser wiederum ist aus dem Fletcher-Algorithmus (s.u.) abgeleitet.
+Als Startwert für die Prüfsummen wird a=1 und b=0 genutzt. Gerechnet wird jeweils mit der größten Primzahl für die jeweilige Bitbreite (16 Bit: 65521
+ und 8 Bit: 251).
+ Eine Umsetzung für die Arduino-Platform ist unter [^5] zu finden.
+
 
 ### Fletcher-16 mit M = 255
 
@@ -77,6 +85,7 @@ Mit einer 16-Bit Zählvariable läßt sich ein Messbereich bis 5:27 min:s abdeck
 | Algorithmus  | Laufzeit C | Laufzeit ASM | ca. Faktor |
 | :---         |  --------: |  ----------: |  -----:    |
 | CRC16        | 7940 ms    | 840 ms       |  9,5       |
+| Adler-16     | 4480 ms    | 520 ms       |  8,6       |
 | Fletcher 255 | 7760 ms    | 280 ms       | 27,7       |
 | Fletcher 256 | 1020 ms    | 200 ms       |  5,1       |
 | Fletcher KC  | 1020 ms    | 200 ms       |  5,1       |
@@ -87,3 +96,5 @@ Mit einer 16-Bit Zählvariable läßt sich ein Messbereich bis 5:27 min:s abdeck
 [^1]: https://de.wikipedia.org/wiki/Zyklische_Redundanzpr%C2%BCfung#Berechnung_einer_CRC-Pr%C3%BCfsumme_in_C_und_Pascal_bzw._Delphi
 [^2]: https://jacksum.net/en/index.html
 [^3]: https://de.wikipedia.org/wiki/Fletcher%E2%80%99s_Checksum
+[^4]: https://de.wikipedia.org/wiki/Adler-32
+[^5]: https://github.com/RobTillaart/Adler
