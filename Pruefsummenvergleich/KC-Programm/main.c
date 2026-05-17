@@ -88,6 +88,7 @@ void main( void)
     uint8_t  bsum;
 
 
+    printf( CLL "\n");
     printf( CLL "C-Routinen\n");
     printf( CLL "crc16         ");
     time = 0;
@@ -132,6 +133,7 @@ void main( void)
     printf( "  %02X (%4d ms)\n", bsum, runtime * TIME_FACTOR);
 
 
+    printf( CLL "\n");
     printf( CLL "ASM-Routinen\n");
     printf( CLL "crc16         ");
     time = 0;
